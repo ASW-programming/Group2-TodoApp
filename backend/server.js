@@ -16,15 +16,38 @@ app.use(cors());
 app.use(express.json());
 const PORT = 3000;
 
+app.get("/todos", async (req, res) => {
+	try {
+		const todoCollection = db.collection("Todos");
+		const snapshot = await todoCollection.get();
+
+		if (snapshot.empty) {
+			return res.status(200).json([]);
+		}
+
+		let todos = [];
+
+		snapshot.forEach((doc) => {
+			todos.push({
+				id: doc.id,
+				...doc.data(),
+			});
+		});
+		res.status(200).json(todos);
+	} catch (error) {
+		res.status(500).send("Något gick fel");
+	}
+});
+
 app.post("/addTodo", (req, res) => {
 	const todo = req.body;
 	console.log(todo);
 
 	res.status(201).json({
 		message: "Todo added",
-		todo: todo
+		todo: todo,
 	});
-})
+});
 
 app.listen(PORT, () => {
 	console.log(`Servern körs på http://localhost:${PORT}`);
