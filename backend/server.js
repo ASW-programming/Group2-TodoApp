@@ -16,6 +16,10 @@ app.use(cors());
 app.use(express.json());
 const PORT = 3000;
 
+app.get("/todos", (req, res) => {
+	res.send("hej");
+});
+
 app.listen(PORT, () => {
 	console.log(`Servern körs på http://localhost:${PORT}`);
 });
