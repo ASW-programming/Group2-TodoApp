@@ -1,14 +1,13 @@
-import TodoInput from "./components/TodoInput"
-
+import TaskList from "./components/TaskList";
+import TodoInput from "./components/TodoInput";
 
 function App() {
- 
-
-  return (
-    <>
-     <TodoInput />
-    </>
-  )
+	return (
+		<>
+			<TodoInput />
+			<TaskList />
+		</>
+	);
 }
 
-export default App
+export default App;
