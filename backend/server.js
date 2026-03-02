@@ -16,15 +16,15 @@ app.use(cors());
 app.use(express.json());
 const PORT = 3000;
 
-app.post("/addTodo", (req, res)=> {
-    const todo = req.body;
-   console.log (todo);
+app.post("/addTodo", (req, res) => {
+	const todo = req.body;
+	console.log(todo);
 
-   res.status(201).json({
-    message: "Todo added",
-    todo: todo
-   });
-    })
+	res.status(201).json({
+		message: "Todo added",
+		todo: todo
+	});
+})
 
 app.listen(PORT, () => {
 	console.log(`Servern körs på http://localhost:${PORT}`);
