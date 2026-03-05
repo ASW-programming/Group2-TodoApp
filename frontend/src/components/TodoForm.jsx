@@ -3,6 +3,7 @@ function TodoForm() {
 
     // Förhindrar att sidan laddas om vid submit
     const handleSubmit = (e) => {
+        // Stoppar default behavior
         e.preventDefault();
 
         if (!task.trim()) return;
