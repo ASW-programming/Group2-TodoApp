@@ -49,6 +49,14 @@ app.post("/addTodo", (req, res) => {
 	});
 });
 
+app.delete("/deleteTodos/:id", (req, res) => {
+	const todoID = req.params.id;
+
+	const todoRef = db.collection("Todos").doc(todoID).delete();
+
+	res.status(200).send("Borttagen");
+});
+
 app.listen(PORT, () => {
 	console.log(`Servern körs på http://localhost:${PORT}`);
 });
