@@ -1,4 +1,4 @@
-import TodoInput from "./components/TodoForm"
+import TodoForm from './components/TodoForm';
 
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-     <TodoInput />
+     <TodoForm />
     </>
   )
 }
