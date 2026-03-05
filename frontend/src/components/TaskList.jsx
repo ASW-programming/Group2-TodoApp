@@ -11,6 +11,7 @@ function TaskList() {
 				throw new Error("Kunde inte hämta todos");
 			}
 
+			// Omvandla response till JSON så det kan användas.
 			const data = await res.json();
 			return data;
 		} catch (error) {
@@ -18,6 +19,7 @@ function TaskList() {
 		}
 	}
 
+	// useQuery för köra funktionen som hämtar datan
 	const {
 		data: todos,
 		isLoading,
@@ -25,10 +27,12 @@ function TaskList() {
 		error,
 	} = useQuery({ queryKey: ["getTodos"], queryFn: getData });
 
+	// Om connection är långsam
 	if (isLoading) {
 		return <p>laddar todos</p>;
 	}
 
+	// Ifall fetch misslyckas.
 	if (isError) {
 		return <p>ett fel uppstod: {error.message}</p>;
 	}
@@ -36,6 +40,7 @@ function TaskList() {
 	return (
 		<div>
 			<ul>
+				{/* Listan för alla todos */}
 				{todos.map((todo) => (
 					<li key={todo.id}>{todo.title}</li>
 				))}
