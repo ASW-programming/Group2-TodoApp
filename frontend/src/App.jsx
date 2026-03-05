@@ -1,4 +1,4 @@
-import TodoInput from "./components/TodoInput"
+import TodoInput from "./components/TodoForm"
 
 
 function App() {
