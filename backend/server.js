@@ -39,14 +39,32 @@ app.get("/getTodos", async (req, res) => {
 	}
 });
 
-app.post("/addTodo", (req, res) => {
-	const todo = req.body;
-	console.log(todo);
+app.post("/addTodo", async (req, res) => {
+	try {
+		const todo = req.body;
 
-	res.status(201).json({
-		message: "Todo added",
-		todo: todo,
-	});
+		const docRef = await db.collection("Todos").add({
+			title: todo.text,
+			completed: false,
+			createdAt: admin.firestore.FieldValue.serverTimestamp(),
+		});
+		// newTodo
+		const newTodo = {
+			id: docRef.id,
+			title: todo.text,
+			completed: false,
+		}
+		console.log(todo);
+		res.status(201).json({
+			message: "Todo added!",
+			todo: newTodo,
+		})
+
+
+	} catch (error) {
+		console.error("Error adding todo:", error);
+		res.status(500).json({ error: "Failed to add todo" });
+	}
 });
 
 app.delete("/deleteTodos/:id", (req, res) => {
