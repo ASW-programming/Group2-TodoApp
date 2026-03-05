@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import Btn from "./Btn";
 
 function TaskList() {
 	const link = "http://localhost:3000";
@@ -42,7 +43,10 @@ function TaskList() {
 			<ul>
 				{/* Listan för alla todos */}
 				{todos.map((todo) => (
-					<li key={todo.id}>{todo.title}</li>
+					<li key={todo.id}>
+						{todo.title}
+						<Btn btnText="X" />
+					</li>
 				))}
 			</ul>
 		</div>
