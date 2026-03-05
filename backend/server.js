@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 const PORT = 3000;
 
-app.get("/todos", async (req, res) => {
+app.get("/getTodos", async (req, res) => {
 	try {
 		const todoCollection = db.collection("Todos");
 		const snapshot = await todoCollection.get();
