@@ -1,6 +1,7 @@
-function Btn({ btnText, onDelete, id }) {
+function Btn(props) {
 	const api_url = "http://localhost:3000";
 
+	// Anropar API för att ta bort ifrån DB.
 	async function deleteTodo(id) {
 		try {
 			// Hämtar ID från databasen
@@ -16,14 +17,15 @@ function Btn({ btnText, onDelete, id }) {
 		}
 	}
 
+	// Funktion för att ta bort ifrån databasen
 	const handleDelete = async () => {
-		await deleteTodo(id);
-		onDelete(id);
+		await deleteTodo(props.id); // 1. Ta bort från databasen
+		props.onDelete(props.id); // 2. Berätta för föräldern att uppdatera UI:t
 	};
 
 	return (
 		<div>
-			<button onClick={handleDelete}>{btnText}</button>
+			<button onClick={handleDelete}>{props.btnText}</button>
 		</div>
 	);
 }

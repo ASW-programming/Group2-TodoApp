@@ -1,12 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Btn from "./Btn";
 
 function TaskList() {
-	const link = "http://localhost:3000";
+	const api_url = "http://localhost:3000";
+	const queryClient = useQueryClient();
 
+	// Functionen som hämtar data som vi sedan lägger i listan
 	async function getData() {
 		try {
-			const res = await fetch(`${link}/getTodos`);
+			const res = await fetch(`${api_url}/getTodos`);
 
 			if (!res.ok) {
 				throw new Error("Kunde inte hämta todos");
@@ -28,6 +30,11 @@ function TaskList() {
 		error,
 	} = useQuery({ queryKey: ["getTodos"], queryFn: getData });
 
+	// Säger till query att listan behövs hämtas igen
+	function deleteUpdateList() {
+		queryClient.invalidateQueries(["getTodos"]);
+	}
+
 	// Om connection är långsam
 	if (isLoading) {
 		return <p>laddar todos</p>;
@@ -43,9 +50,13 @@ function TaskList() {
 			<ul>
 				{/* Listan för alla todos */}
 				{todos.map((todo) => (
-					<li key={todo.id}>
+					<li key={todo.id} style={{ display: "flex" }}>
 						{todo.title}
-						<Btn btnText="X" />
+						<Btn
+							btnText="X"
+							id={todo.id}
+							onDelete={deleteUpdateList}
+						/>
 					</li>
 				))}
 			</ul>
