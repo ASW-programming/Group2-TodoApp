@@ -30,7 +30,7 @@ function TaskList() {
 		error,
 	} = useQuery({ queryKey: ["getTodos"], queryFn: getData });
 
-	// Säger till query att listan behövs hämtas igen
+	// Säger till query att listan behövs hämtas igen när något plockats bort
 	function deleteUpdateList() {
 		queryClient.invalidateQueries(["getTodos"]);
 	}
