@@ -53,17 +53,29 @@ app.post("/addTodo", async (req, res) => {
 			id: docRef.id,
 			title: todo.text,
 			completed: false,
-		}
+		};
 		console.log(todo);
 		res.status(201).json({
 			message: "Todo added!",
 			todo: newTodo,
-		})
-
-
+		});
 	} catch (error) {
 		console.error("Error adding todo:", error);
 		res.status(500).json({ error: "Failed to add todo" });
+	}
+});
+
+app.put("/updateTodos/:id", async (req, res) => {
+	try {
+		const todoID = req.params.id;
+		const updates = req.body;
+
+		const todoRef = db.collection("Todos").doc(todoID);
+		await todoRef.set(updates, { merge: true });
+		res.status(200).send("Update Succesfull");
+	} catch (error) {
+		console.log("Fel vid uppdatering av Todo");
+		res.status(500).send("Något gick fel vid uppdatering");
 	}
 });
 
