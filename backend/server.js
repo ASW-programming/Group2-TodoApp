@@ -74,8 +74,8 @@ app.put("/updateTodos/:id", async (req, res) => {
 		await todoRef.set(updates, { merge: true });
 		res.status(200).send("Update Succesfull");
 	} catch (error) {
-		console.log("Fel vid uppdatering av Todo");
-		res.status(500).json({ error: "Något gick fel vid uppdatering" });
+		console.log("Error updating todo");
+		res.status(500).json({ error: "Something went wrong" });
 	}
 });
 
