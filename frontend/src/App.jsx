@@ -1,12 +1,12 @@
 import TaskList from "./components/TaskList";
-import TodoInput from "./components/TodoInput";
+import TodoForm from "./components/TodoForm";
 
 function App() {
 	return (
-		<>
-			<TodoInput />
-			<TaskList />
-		</>
+    <>
+    	<TodoForm />
+		<TaskList />
+	</>
 	);
 }
 
