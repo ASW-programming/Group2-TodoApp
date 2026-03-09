@@ -1,11 +1,11 @@
 // Tar emot task och setTask från TodoForm via props
-function TodoInput({ task, setTask }) {
+function TodoInput(props) {
     return (
         <input
             type="text"
-            value={task}
+            value= {props.task}
             //setTask uppdaterar state
-            onChange={(e) => setTask(e.target.value)}
+            onChange={(e) => props.setTask(e.target.value)}
         />
     );
 }
