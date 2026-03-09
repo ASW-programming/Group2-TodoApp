@@ -1,14 +1,9 @@
 function SubmitBtn() {
-    return (
-
-        <>
-
-            <button type="submit" form="todoForm">
-                Add todo
-            </button>
-
-        </>
-    );
+	return (
+		<>
+			<button type="submit">Add todo</button>
+		</>
+	);
 }
 
-export default SubmitBtn
+export default SubmitBtn;
