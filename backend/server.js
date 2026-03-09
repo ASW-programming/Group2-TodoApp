@@ -75,7 +75,7 @@ app.put("/updateTodos/:id", async (req, res) => {
 		res.status(200).send("Update Succesfull");
 	} catch (error) {
 		console.log("Fel vid uppdatering av Todo");
-		res.status(500).send("Något gick fel vid uppdatering");
+		res.status(500).json({ error: "Något gick fel vid uppdatering" });
 	}
 });
 
