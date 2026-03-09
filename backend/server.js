@@ -44,14 +44,14 @@ app.post("/addTodo", async (req, res) => {
 		const todo = req.body;
 
 		const docRef = await db.collection("Todos").add({
-			title: todo.text,
+			title: todo.title,
 			completed: false,
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 		});
 		// newTodo
 		const newTodo = {
 			id: docRef.id,
-			title: todo.text,
+			title: todo.title,
 			completed: false,
 		};
 		console.log(todo);
