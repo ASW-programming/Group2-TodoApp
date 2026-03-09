@@ -1,3 +1,4 @@
+const api_url = "http://localhost:3000";
 function TodoForm() {
     const [task, setTask] = useState("");
 
@@ -11,10 +12,10 @@ function TodoForm() {
         // Post 
 
         try {
-            const postTodo = await fetch("https://localhost.com/addTodo", {
+            const postTodo = await fetch(`${api_url / addTodo}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text: task })
+                body: JSON.stringify({ title: task })
 
             })
             if (!postTodo.ok) throw new Error("Failed to create todo")
@@ -32,8 +33,8 @@ function TodoForm() {
     return (
         <div>
             <form id="todoForm" onSubmit={handleSubmit}>
-                <TodoInput></TodoInput>
-                <SubmitBtn></SubmitBtn>
+                <TodoInput />
+                <SubmitBtn />
             </form>
         </div>
     );
