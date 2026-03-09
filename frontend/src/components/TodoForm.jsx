@@ -1,4 +1,9 @@
+import { useState } from "react";
+import TodoInput from "./TodoInput";
+import SubmitBtn from "./SubmitBtn";
+
 const api_url = "http://localhost:3000";
+
 function TodoForm() {
     const [task, setTask] = useState("");
 
@@ -6,38 +11,33 @@ function TodoForm() {
     const handleSubmit = async (e) => {
         // Stoppar default behavior
         e.preventDefault();
-
+        // Kolla ifall input är tomt
         if (!task.trim()) return;
 
-        // Post 
-
+        // Post
         try {
-            const postTodo = await fetch(`${api_url / addTodo}`, {
+            const postTodo = await fetch(`${api_url}/addTodo`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title: task })
-
-            })
-            if (!postTodo.ok) throw new Error("Failed to create todo")
-
+            });
+            if (!postTodo.ok) throw new Error("Failed to create todo");
             const data = await postTodo.json();
-
             console.log("Created todo:", data);
-
-
         } catch (error) {
             console.error("Error creating todo:", error);
         }
-    }
+    };
 
     return (
         <div>
             <form id="todoForm" onSubmit={handleSubmit}>
-                <TodoInput />
+                {/* Skickar task och setTask till TodoInput via props */}
+                <TodoInput task={task} setTask={setTask} />
                 <SubmitBtn />
             </form>
         </div>
     );
 }
 
-export default TodoForm;   
+export default TodoForm;
