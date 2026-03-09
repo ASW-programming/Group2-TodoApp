@@ -32,7 +32,8 @@ function TodoForm() {
     return (
         <div>
             <form id="todoForm" onSubmit={handleSubmit}>
-
+                <TodoInput></TodoInput>
+                <SubmitBtn></SubmitBtn>
             </form>
         </div>
     );
