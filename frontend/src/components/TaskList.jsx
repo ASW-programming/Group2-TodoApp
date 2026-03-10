@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Btn from "./Btn";
+import EditBtn from "./EditBtn";
 
 function TaskList() {
 	const api_url = "http://localhost:3000";
@@ -52,6 +53,12 @@ function TaskList() {
 				{todos.map((todo) => (
 					<li key={todo.id} style={{ display: "flex" }}>
 						{todo.title}
+
+						<EditBtn
+							id={todo.id}
+							onEdit={deleteUpdateList}
+						/> 
+						
 						<Btn
 							btnText="X"
 							id={todo.id}
