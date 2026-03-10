@@ -7,7 +7,9 @@ function EditBtn(props) {
     }
 
     return (
-        <button>Edit</button>
+        <button onClick={() => editTodo(props.id)}>
+        Edit
+        </button>
     );
 }
 
