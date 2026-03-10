@@ -1,11 +1,9 @@
-import TaskList from "./components/TaskList";
-import TodoForm from "./components/TodoForm";
+import Card from "./components/Card";
 
 function App() {
 	return (
 		<>
-			<TodoForm />
-			<TaskList />
+			<Card />
 		</>
 	);
 }

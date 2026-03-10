@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Btn from "./Btn";
 
-function TaskList() {
+function TodoList() {
 	const api_url = "http://localhost:3000";
 	const queryClient = useQueryClient();
 
@@ -47,13 +47,13 @@ function TaskList() {
 
 	return (
 		<div>
-			<ul>
+			<ul id="todoList">
 				{/* Listan för alla todos */}
 				{todos.map((todo) => (
-					<li key={todo.id} style={{ display: "flex" }}>
+					<li key={todo.id} className="todoList">
 						{todo.title}
 						<Btn
-							btnText="X"
+							btnText=""
 							id={todo.id}
 							onDelete={deleteUpdateList}
 						/>
@@ -64,4 +64,4 @@ function TaskList() {
 	);
 }
 
-export default TaskList;
+export default TodoList;
