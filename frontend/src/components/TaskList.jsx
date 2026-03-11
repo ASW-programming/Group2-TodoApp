@@ -1,10 +1,18 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import Btn from "./Btn";
 import EditBtn from "./EditBtn";
 
 function TaskList() {
 	const api_url = "http://localhost:3000";
 	const queryClient = useQueryClient();
+
+	// Sparar id:t för den todo som redigeras
+	// null = ingen todo redigeras
+	const [editingId, setEditingId] = useState(null);
+	// Sparar texten som användaren skriver i input-fältet
+	// när en todo är i edit-mode
+	const [editedText, setEditedText] = useState("");
 
 	// Functionen som hämtar data som vi sedan lägger i listan
 	async function getData() {
@@ -46,6 +54,13 @@ function TaskList() {
 		return <p>ett fel uppstod: {error.message}</p>;
 	}
 
+	// Startar edit-mode för vald todo
+	// Sparar todo:ns id och nuvarande titel i state
+	const startEdit = (id, currentTitle) => {
+		setEditingId(id);
+		setEditedText(currentTitle);
+	};
+
 	return (
 		<div>
 			<ul>
@@ -56,9 +71,10 @@ function TaskList() {
 
 						<EditBtn
 							id={todo.id}
-							onEdit={deleteUpdateList}
+							currentTitle={todo.title}
+							onStartEdit={startEdit}
 						/> 
-						
+
 						<Btn
 							btnText="X"
 							id={todo.id}
