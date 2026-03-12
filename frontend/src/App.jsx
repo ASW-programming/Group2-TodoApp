@@ -1,5 +1,6 @@
 import TaskList from "./components/TaskList";
-import TodoForm from "./components/TodoForm";
+import TodoInput from "./components/TodoInput";
+import "./App.css";
 
 function App() {
 	return (

@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
 
 function TaskList() {
@@ -50,13 +51,21 @@ function TaskList() {
 			<ul>
 				{/* Listan för alla todos */}
 				{todos.map((todo) => (
+
 					<li key={todo.id} style={{ display: "flex" }}>
-						{todo.title}
+						<TodoCheckbox todo={todo} />
+
+						<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+							{todo.title}
+						</span>
+
 						<Btn
 							btnText="X"
 							id={todo.id}
 							onDelete={deleteUpdateList}
 						/>
+
+
 					</li>
 				))}
 			</ul>
