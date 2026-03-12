@@ -54,13 +54,17 @@ function TaskList() {
 
 					<li key={todo.id} style={{ display: "flex" }}>
 						<TodoCheckbox todo={todo} />
-						<span style={{ textDecoration: todo.completed ? "line-through" : "none" }} />
-						{todo.title}
+
+						<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+							{todo.title}
+						</span>
+
 						<Btn
 							btnText="X"
 							id={todo.id}
 							onDelete={deleteUpdateList}
 						/>
+
 
 					</li>
 				))}

@@ -1,19 +1,23 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 function TodoCheckbox({ todo }) {
     const queryClient = useQueryClient();
     const api_url = "http://localhost:3000";
 
+    const [checked, setChecked] = useState(todo.completed)
+
     async function updateCompleted() {
         try {
-            setChecked(!checked); // this makes the user see the toggled checkbox instantly on click
+            // Toggle locally immediately
+            setChecked(!checked);
             const res = await fetch(`${api_url}/updateTodos/${todo.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    completed: !todo.completed,
+                    completed: !checked,
                 }),
             });
 
@@ -21,8 +25,8 @@ function TodoCheckbox({ todo }) {
                 throw new Error("Could not update todo");
             }
 
-            // refresh todo list
             queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+
         } catch (error) {
             console.error(error);
         }
@@ -32,7 +36,7 @@ function TodoCheckbox({ todo }) {
         <input
             type="checkbox"
             className="todo-checkbox"
-            checked={todo.completed}
+            checked={checked}
             onChange={updateCompleted}
         />
     );
