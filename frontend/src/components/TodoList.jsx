@@ -55,7 +55,10 @@ function TodoList() {
 				) : (
 					todos.map((todo) => (
 						<li key={todo.id} className="todoList">
-							{todo.title}
+							<TodoCheckbox todo={todo} />
+							<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+								{todo.title}
+							</span>
 							<Btn id={todo.id} onDelete={deleteUpdateList} />
 						</li>
 					))
