@@ -53,15 +53,31 @@ function TodoList() {
 				{todos.length === 0 ? (
 					<p>Inga todos än!</p>
 				) : (
-					todos.map((todo) => (
-						<li key={todo.id} className="todoList">
-							<TodoCheckbox todo={todo} />
-							<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
-								{todo.title}
-							</span>
-							<Btn id={todo.id} onDelete={deleteUpdateList} />
-						</li>
-					))
+					todos
+						// Skapa en kopia av arrayen
+						.slice()
+
+						// Sortera listan efter sekunder-skapad och efter completed true/false
+						.sort((a, b) => {
+							if (a.completed !== b.completed) {
+								return a.completed - b.completed; // Ofärdiga först
+							}
+							return a.createdAt._seconds - b.createdAt._seconds; // Äldst först inom gruppen
+						})
+						.map((todo) => (
+							<li key={todo.id} className="todoList">
+								<TodoCheckbox todo={todo} />
+								<span
+									style={{
+										textDecoration: todo.completed
+											? "line-through"
+											: "none",
+									}}>
+									{todo.title}
+								</span>
+								<Btn id={todo.id} onDelete={deleteUpdateList} />
+							</li>
+						))
 				)}
 			</ul>
 		</div>
