@@ -67,7 +67,17 @@ function TaskList() {
 				{/* Listan för alla todos */}
 				{todos.map((todo) => (
 					<li key={todo.id} style={{ display: "flex" }}>
-						{todo.title}
+						{/* Om todo.id matchar editingId: visa input-fält för redigering
+						Annars: visa vanlig titel (todo.title) */}
+						{
+							todo.id === editingId
+								? <input
+										value={editedText}
+										onChange={(e) => setEditedText(e.target.value)}
+									/>
+								
+							: todo.title
+						}
 
 						<EditBtn
 							id={todo.id}
