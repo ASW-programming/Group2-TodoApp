@@ -5,6 +5,7 @@ Welcome to Group 2 Todo-app.
 3. CD into frontend and run `npm install`
 4. CD .. to go back to root and CD backend into backend
 5. Run `npm install` in backend directory
+6. `npm run dev` in root directory to start Frontend + Backend
 
 # React + Vite
 
