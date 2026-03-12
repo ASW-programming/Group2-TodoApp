@@ -1,15 +1,17 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
+import DeleteSVG from "../assets/DeleteSVG";
+import Delete from "../utils/Delete";
+import { API_URL } from "../utils/Api_url";
 
 function TodoList() {
-	const api_url = "http://localhost:3000";
 	const queryClient = useQueryClient();
 
 	// Functionen som hämtar data som vi sedan lägger i listan
 	async function getData() {
 		try {
-			const res = await fetch(`${api_url}/getTodos`);
+			const res = await fetch(`${API_URL}/getTodos`);
 
 			if (!res.ok) {
 				throw new Error("Kunde inte hämta todos");
@@ -33,7 +35,7 @@ function TodoList() {
 
 	// Säger till query att listan behövs hämtas igen när något plockats bort
 	function deleteUpdateList() {
-		queryClient.invalidateQueries(["getTodos"]);
+		queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 	}
 
 	// Om connection är långsam
@@ -45,6 +47,12 @@ function TodoList() {
 	if (isError) {
 		return <p>ett fel uppstod: {error.message}</p>;
 	}
+
+	// Funktion för att ta bort ifrån databasen
+	const handleDelete = async (id) => {
+		await Delete(id); // 1. Ta bort från databasen
+		props.onDelete(id); // 2. Berätta för föräldern att uppdatera UI:t
+	};
 
 	return (
 		<div>
@@ -75,7 +83,12 @@ function TodoList() {
 									}}>
 									{todo.title}
 								</span>
-								<Btn id={todo.id} onDelete={deleteUpdateList} />
+								<Btn
+									id={todo.id}
+									text="Remove"
+									svg={<DeleteSVG />}
+									onClick={() => handleDelete(todo.id)}
+								/>
 							</li>
 						))
 				)}
