@@ -2,28 +2,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
 import DeleteSVG from "../assets/DeleteSVG";
-import Delete from "../utils/Delete";
-import { API_URL } from "../utils/Api_url";
+import { deleteTodo, getTodos } from "../utils/Calls";
 
 function TodoList() {
 	const queryClient = useQueryClient();
-
-	// Functionen som hämtar data som vi sedan lägger i listan
-	async function getData() {
-		try {
-			const res = await fetch(`${API_URL}/getTodos`);
-
-			if (!res.ok) {
-				throw new Error("Kunde inte hämta todos");
-			}
-
-			// Omvandla response till JSON så det kan användas.
-			const data = await res.json();
-			return data;
-		} catch (error) {
-			console.log("Could not fetch todos");
-		}
-	}
 
 	// useQuery för köra funktionen som hämtar datan
 	const {
@@ -31,10 +13,10 @@ function TodoList() {
 		isLoading,
 		isError,
 		error,
-	} = useQuery({ queryKey: ["getTodos"], queryFn: getData });
+	} = useQuery({ queryKey: ["getTodos"], queryFn: getTodos });
 
 	// Säger till query att listan behövs hämtas igen när något plockats bort
-	function deleteUpdateList() {
+	function updateList() {
 		queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 	}
 
@@ -48,10 +30,12 @@ function TodoList() {
 		return <p>ett fel uppstod: {error.message}</p>;
 	}
 
+	getTodos();
+
 	// Funktion för att ta bort ifrån databasen
 	const handleDelete = async (id) => {
-		await Delete(id); // 1. Ta bort från databasen
-		props.onDelete(id); // 2. Berätta för föräldern att uppdatera UI:t
+		await deleteTodo(id); // 1. Ta bort från databasen
+		updateList(id); // 2. Berätta för föräldern att uppdatera UI:t
 	};
 
 	return (

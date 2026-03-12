@@ -1,13 +1,14 @@
 import { useState } from "react";
 import TodoInput from "./TodoInput";
-import SubmitBtn from "./SubmitBtn";
 import { useQueryClient } from "@tanstack/react-query";
+import Btn from "./Btn";
+import PostSVG from "../assets/PostSVG";
+import { postTodos } from "../utils/Calls";
 
 const api_url = "http://localhost:3000";
 
 function TodoForm() {
 	const [task, setTask] = useState("");
-
 	const queryClient = useQueryClient();
 
 	// Förhindrar att sidan laddas om vid submit
@@ -17,23 +18,11 @@ function TodoForm() {
 		// Kolla ifall input är tomt
 		if (!task.trim()) return;
 
-		// Post
-		try {
-			const postTodo = await fetch(`${api_url}/addTodo`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ title: task }),
-			});
-			if (!postTodo.ok) throw new Error("Failed to create todo");
-			const data = await postTodo.json();
-			setTask("");
+		await postTodos(task);
 
-			queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+		queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 
-			console.log("Created todo:", data);
-		} catch (error) {
-			console.error("Error creating todo:", error);
-		}
+		setTask("");
 	};
 
 	return (
@@ -41,7 +30,12 @@ function TodoForm() {
 			<form id="todoForm" onSubmit={handleSubmit}>
 				{/* Skickar task och setTask till TodoInput via props */}
 				<TodoInput task={task} setTask={setTask} />
-				<SubmitBtn />
+				<Btn
+					text="Submit"
+					svg={<PostSVG />}
+					type="submit"
+					id="submitBtn"
+				/>
 			</form>
 		</div>
 	);
