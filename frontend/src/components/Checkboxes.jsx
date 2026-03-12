@@ -35,7 +35,7 @@ function TodoCheckbox({ todo }) {
     return (
         <input
             type="checkbox"
-            className="todo-checkbox"
+            className="todoCheckbox"
             checked={checked}
             onChange={updateCompleted}
         />
