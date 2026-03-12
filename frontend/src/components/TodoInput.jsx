@@ -1,15 +1,18 @@
 // Tar emot task och setTask från TodoForm via props
 function TodoInput(props) {
 	return (
-		<div>
+		<div className="inputContainer">
 			<input
 				type="text"
+				id="inputField"
+				className="todoInput"
 				value={props.task}
-				//setTask uppdaterar state
 				onChange={(e) => props.setTask(e.target.value)}
+				placeholder="Enter text"
 			/>
+
+			<span className="inputHighlight"></span>
 		</div>
 	);
 }
-
 export default TodoInput;

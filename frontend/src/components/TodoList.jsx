@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
 
-function TaskList() {
+function TodoList() {
 	const api_url = "http://localhost:3000";
 	const queryClient = useQueryClient();
 
@@ -48,29 +48,21 @@ function TaskList() {
 
 	return (
 		<div>
-			<ul>
+			<ul id="todoList">
 				{/* Listan för alla todos */}
-				{todos.map((todo) => (
-
-					<li key={todo.id} style={{ display: "flex" }}>
-						<TodoCheckbox todo={todo} />
-
-						<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+				{todos.length === 0 ? (
+					<p>Inga todos än!</p>
+				) : (
+					todos.map((todo) => (
+						<li key={todo.id} className="todoList">
 							{todo.title}
-						</span>
-
-						<Btn
-							btnText="X"
-							id={todo.id}
-							onDelete={deleteUpdateList}
-						/>
-
-
-					</li>
-				))}
+							<Btn id={todo.id} onDelete={deleteUpdateList} />
+						</li>
+					))
+				)}
 			</ul>
 		</div>
 	);
 }
 
-export default TaskList;
+export default TodoList;

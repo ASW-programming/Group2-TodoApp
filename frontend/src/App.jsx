@@ -1,12 +1,10 @@
-import TaskList from "./components/TaskList";
-import TodoInput from "./components/TodoInput";
+import Card from "./components/Card";
 import "./App.css";
 
 function App() {
 	return (
 		<>
-			<TodoForm />
-			<TaskList />
+			<Card />
 		</>
 	);
 }
