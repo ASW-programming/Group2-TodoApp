@@ -44,26 +44,38 @@ app.post("/addTodo", async (req, res) => {
 		const todo = req.body;
 
 		const docRef = await db.collection("Todos").add({
-			title: todo.text,
+			title: todo.title,
 			completed: false,
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 		});
 		// newTodo
 		const newTodo = {
 			id: docRef.id,
-			title: todo.text,
+			title: todo.title,
 			completed: false,
-		}
+		};
 		console.log(todo);
 		res.status(201).json({
 			message: "Todo added!",
 			todo: newTodo,
-		})
-
-
+		});
 	} catch (error) {
 		console.error("Error adding todo:", error);
 		res.status(500).json({ error: "Failed to add todo" });
+	}
+});
+
+app.put("/updateTodos/:id", async (req, res) => {
+	try {
+		const todoID = req.params.id;
+		const updates = req.body;
+
+		const todoRef = db.collection("Todos").doc(todoID);
+		await todoRef.set(updates, { merge: true });
+		res.status(200).send("Update Succesfull");
+	} catch (error) {
+		console.log("Error updating todo");
+		res.status(500).json({ error: "Something went wrong" });
 	}
 });
 
