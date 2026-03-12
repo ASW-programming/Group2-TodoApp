@@ -49,16 +49,16 @@ function TodoList() {
 		<div>
 			<ul id="todoList">
 				{/* Listan för alla todos */}
-				{todos.map((todo) => (
-					<li key={todo.id} className="todoList">
-						{todo.title}
-						<Btn
-							btnText=""
-							id={todo.id}
-							onDelete={deleteUpdateList}
-						/>
-					</li>
-				))}
+				{todos.length === 0 ? (
+					<p>Inga todos än!</p>
+				) : (
+					todos.map((todo) => (
+						<li key={todo.id} className="todoList">
+							{todo.title}
+							<Btn id={todo.id} onDelete={deleteUpdateList} />
+						</li>
+					))
+				)}
 			</ul>
 		</div>
 	);
