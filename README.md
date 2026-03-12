@@ -1,5 +1,11 @@
 Welcome to Group 2 Todo-app.
 
+1. git clone the project.
+2. Run `npm install` in root directory.
+3. CD into frontend and run `npm install`
+4. CD .. to go back to root and CD backend into backend
+5. Run `npm install` in backend directory
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
