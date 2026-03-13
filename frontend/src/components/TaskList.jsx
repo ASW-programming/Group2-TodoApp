@@ -61,6 +61,34 @@ function TaskList() {
 		setEditedText(currentTitle);
 	};
 
+	const handleSave = async () => {
+		try {
+			const response = await fetch(`http://localhost:3000/updateTodos/${editingId}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					title: editedText
+				})
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to update todo");
+			}
+
+			// Stänger edit-mode
+			setEditingId(null); 
+			// Säger till query att hämta listan igen
+			// Lägg till den redigerade todon
+			queryClient.invalidateQueries(["getTodos"]);
+			
+
+		} catch (error) {
+				console.error(error);
+		}
+	};
+
 	return (
 		<div>
 			<ul>
@@ -71,11 +99,15 @@ function TaskList() {
 						Annars: visa vanlig titel (todo.title) */}
 						{
 							todo.id === editingId
-								? <input
+								? (
+									<>
+									<input
 										value={editedText}
 										onChange={(e) => setEditedText(e.target.value)}
 									/>
-								
+									<button onClick={handleSave}>Save</button>
+									</>
+								)
 							: todo.title
 						}
 
