@@ -1,11 +1,30 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
 import DeleteSVG from "../assets/DeleteSVG";
-import { deleteTodo, getTodos } from "../utils/Calls";
+import { deleteTodo, getTodos, updateTodo } from "../utils/Calls";
+import EditSVG from "../assets/EditSVG";
+import TodoInput from "./TodoInput.jsx";
+import SaveSVG from "../assets/SaveSVG.jsx";
 
 function TodoList() {
 	const queryClient = useQueryClient();
+
+	const [editingId, setEditingId] = useState(null);
+	const [editedText, setEditedText] = useState("");
+
+	const startEdit = (id, currentTitle) => {
+		setEditingId(id);
+		setEditedText(currentTitle);
+	};
+
+	const handleSaveEdit = async () => {
+		console.log("id:", editingId, "text:", editedText);
+		await updateTodo(editingId, { title: editedText });
+		setEditingId(null);
+		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+	};
 
 	// useQuery för köra funktionen som hämtar datan
 	const {
@@ -29,8 +48,6 @@ function TodoList() {
 	if (isError) {
 		return <p>ett fel uppstod: {error.message}</p>;
 	}
-
-	getTodos();
 
 	// Funktion för att ta bort ifrån databasen
 	const handleDelete = async (id) => {
@@ -59,20 +76,54 @@ function TodoList() {
 						.map((todo) => (
 							<li key={todo.id} className="todoList">
 								<TodoCheckbox todo={todo} />
-								<span
-									style={{
-										textDecoration: todo.completed
-											? "line-through"
-											: "none",
-									}}>
-									{todo.title}
-								</span>
-								<Btn
-									id={todo.id}
-									text="Remove"
-									svg={<DeleteSVG />}
-									onClick={() => handleDelete(todo.id)}
-								/>
+								{todo.id === editingId ? (
+									<>
+										<TodoInput
+											task={editedText}
+											onChange={(e) =>
+												setEditedText(e.target.value)
+											}
+											placeholder="Edit todo"
+										/>
+										<Btn
+											onClick={handleSaveEdit}
+											text="Save"
+											svg={<SaveSVG />}
+										/>
+									</>
+								) : (
+									<span
+										style={{
+											textDecoration: todo.completed
+												? "line-through"
+												: "none",
+										}}>
+										{todo.title}
+									</span>
+								)}
+
+								<div style={{ display: "flex", gap: "5px" }}>
+									{todo.id !== editingId && (
+										<Btn
+											text="Edit"
+											svg={<EditSVG />}
+											onClick={() =>
+												startEdit(todo.id, todo.title)
+											}
+										/>
+										// <EditBtn
+										// 	id={todo.id}
+										// 	currentTitle={todo.title}
+										// 	onStartEdit={startEdit}
+										// />
+									)}
+									<Btn
+										id={todo.id}
+										text="Remove"
+										svg={<DeleteSVG />}
+										onClick={() => handleDelete(todo.id)}
+									/>
+								</div>
 							</li>
 						))
 				)}

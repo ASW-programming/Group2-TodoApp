@@ -49,3 +49,24 @@ export const deleteTodo = async (id) => {
 		console.log(error);
 	}
 };
+
+export const updateTodo = async (id, updates) => {
+	try {
+		const response = await fetch(`${API_URL}/updateTodos/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(updates),
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to update todo");
+		}
+
+		const text = await response.text();
+		return text ? JSON.parse(text) : null;
+	} catch (error) {
+		console.error(error);
+	}
+};

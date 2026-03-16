@@ -29,7 +29,12 @@ function TodoForm() {
 		<div>
 			<form id="todoForm" onSubmit={handleSubmit}>
 				{/* Skickar task och setTask till TodoInput via props */}
-				<TodoInput task={task} setTask={setTask} />
+				<TodoInput
+					task={task}
+					setTask={setTask}
+					placeholder="Add todo"
+					onChange={(e) => setTask(e.target.value)}
+				/>
 				<Btn
 					text="Submit"
 					svg={<PostSVG />}
