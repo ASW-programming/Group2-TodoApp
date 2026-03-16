@@ -100,7 +100,6 @@ function TodoList() {
 						<li key={todo.id} className="todoList">
 							<TodoCheckbox todo={todo} />
 							<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
-								{todo.title}
 							</span>
 							{/* Om todo.id matchar editingId: visa input-fält för redigering
 						Annars: visa vanlig titel (todo.title) */}
