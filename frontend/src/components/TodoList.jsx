@@ -23,7 +23,7 @@ function TodoList() {
 			const data = await res.json();
 			return data;
 		} catch (error) {
-			console.log("Could not fetch todos");
+			throw new Error("Could not fetch");
 		}
 	}
 
@@ -35,7 +35,7 @@ function TodoList() {
 	} = useQuery({ queryKey: ["getTodos"], queryFn: getData });
 
 	function deleteUpdateList() {
-		queryClient.invalidateQueries(["getTodos"]);
+		queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 	}
 
 	if (isLoading) {
@@ -46,6 +46,8 @@ function TodoList() {
 		return <p>ett fel uppstod: {error.message}</p>;
 	}
 
+	if (!todos) return null;
+
 	const startEdit = (id, currentTitle) => {
 		setEditingId(id);
 		setEditedText(currentTitle);
@@ -53,22 +55,25 @@ function TodoList() {
 
 	const handleSave = async () => {
 		try {
-			const response = await fetch(`${api_url}/updateTodos/${editingId}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
+			const response = await fetch(
+				`${api_url}/updateTodos/${editingId}`,
+				{
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						title: editedText,
+					}),
 				},
-				body: JSON.stringify({
-					title: editedText,
-				}),
-			});
+			);
 
 			if (!response.ok) {
 				throw new Error("Failed to update todo");
 			}
 
 			setEditingId(null);
-			queryClient.invalidateQueries(["getTodos"]);
+			queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 		} catch (error) {
 			console.error(error);
 		}
@@ -96,26 +101,35 @@ function TodoList() {
 									<>
 										<input
 											value={editedText}
-											onChange={(e) => setEditedText(e.target.value)}
+											onChange={(e) =>
+												setEditedText(e.target.value)
+											}
 										/>
 										<SaveBtn onClick={handleSave} />
 									</>
 								) : (
 									<span
 										style={{
-											textDecoration: todo.completed ? "line-through" : "none",
+											textDecoration: todo.completed
+												? "line-through"
+												: "none",
 										}}>
 										{todo.title}
 									</span>
 								)}
 
 								<div style={{ display: "flex", gap: "5px" }}>
-									<EditBtn
+									{todo.id !== editingId && (
+										<EditBtn
+											id={todo.id}
+											currentTitle={todo.title}
+											onStartEdit={startEdit}
+										/>
+									)}
+									<Btn
 										id={todo.id}
-										currentTitle={todo.title}
-										onStartEdit={startEdit}
+										onDelete={deleteUpdateList}
 									/>
-									<Btn id={todo.id} onDelete={deleteUpdateList} />
 								</div>
 							</li>
 						))
