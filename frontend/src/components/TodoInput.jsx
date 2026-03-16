@@ -11,8 +11,8 @@ function TodoInput(props) {
 				placeholder={props.placeholder}
 			/>
 
-			<span className="inputHighlight"></span>
-		</div>
-	);
+            <span className="inputHighlight"></span>
+        </div>
+    );
 }
 export default TodoInput;
