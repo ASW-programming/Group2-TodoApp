@@ -4,6 +4,7 @@ import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
 import EditBtn from "./EditBtn";
 import SaveBtn from "./SaveBtn";
+import TodoInput from "./TodoInput";
 
 function TodoList() {
 	const api_url = "http://localhost:3000";
@@ -99,12 +100,14 @@ function TodoList() {
 
 								{todo.id === editingId ? (
 									<>
-										<input
+										<TodoInput
 											value={editedText}
 											onChange={(e) =>
 												setEditedText(e.target.value)
 											}
+											placeholder="Edit todo"
 										/>
+
 										<SaveBtn onClick={handleSave} />
 									</>
 								) : (
