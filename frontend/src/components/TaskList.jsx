@@ -63,7 +63,7 @@ function TaskList() {
 
 	const handleSave = async () => {
 		try {
-			const response = await fetch(`http://localhost:3000/updateTodos/${editingId}`, {
+			const response = await fetch(`${api_url}/updateTodos/${editingId}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json"
