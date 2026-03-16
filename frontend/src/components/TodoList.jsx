@@ -1,9 +1,10 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
 import EditBtn from "./EditBtn";
 
-function TaskList() {
+function TodoList() {
 	const api_url = "http://localhost:3000";
 	const queryClient = useQueryClient();
 
@@ -91,11 +92,17 @@ function TaskList() {
 
 	return (
 		<div>
-			<ul>
-				{/* Listan för alla todos */}
-				{todos.map((todo) => (
-					<li key={todo.id} style={{ display: "flex" }}>
-						{/* Om todo.id matchar editingId: visa input-fält för redigering
+			<ul id="todoList">
+				{todos.length === 0 ? (
+					<p>Inga todos än!</p>
+				) : (
+					todos.map((todo) => (
+						<li key={todo.id} className="todoList">
+							<TodoCheckbox todo={todo} />
+							<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+								{todo.title}
+							</span>
+							{/* Om todo.id matchar editingId: visa input-fält för redigering
 						Annars: visa vanlig titel (todo.title) */}
 						{
 							todo.id === editingId
@@ -116,17 +123,13 @@ function TaskList() {
 							currentTitle={todo.title}
 							onStartEdit={startEdit}
 						/> 
-
-						<Btn
-							btnText="X"
-							id={todo.id}
-							onDelete={deleteUpdateList}
-						/>
-					</li>
-				))}
+							<Btn id={todo.id} onDelete={deleteUpdateList} />
+						</li>
+					))
+				)}
 			</ul>
 		</div>
 	);
 }
 
-export default TaskList;
+export default TodoList;
