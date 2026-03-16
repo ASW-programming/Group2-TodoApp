@@ -3,6 +3,7 @@ import { useState } from "react";
 import TodoCheckbox from "./Checkboxes";
 import Btn from "./Btn";
 import EditBtn from "./EditBtn";
+import SaveBtn from "./SaveBtn";
 
 function TodoList() {
 	const api_url = "http://localhost:3000";
@@ -99,8 +100,8 @@ function TodoList() {
 					todos.map((todo) => (
 						<li key={todo.id} className="todoList">
 							<TodoCheckbox todo={todo} />
-							<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
-							</span>
+							
+							
 							{/* Om todo.id matchar editingId: visa input-fält för redigering
 						Annars: visa vanlig titel (todo.title) */}
 						{
@@ -110,19 +111,24 @@ function TodoList() {
 									<input
 										value={editedText}
 										onChange={(e) => setEditedText(e.target.value)}
-									/>
-									<button onClick={handleSave}>Save</button>
+											/>
+											<SaveBtn onClick={handleSave}/>
 									</>
 								)
-							: todo.title
-						}
-
+							: 
+							<span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+										{todo.title}
+										</span>
+								}
+								
+						<div style= {{display: "flex", gap: "5px"}}>
 						<EditBtn
 							id={todo.id}
 							currentTitle={todo.title}
 							onStartEdit={startEdit}
 						/> 
-							<Btn id={todo.id} onDelete={deleteUpdateList} />
+								<Btn id={todo.id} onDelete={deleteUpdateList} />
+								</div>
 						</li>
 					))
 				)}
