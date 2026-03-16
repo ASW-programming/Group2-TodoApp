@@ -26,6 +26,11 @@ function TodoList() {
 		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 	};
 
+	const handleCheckboxes = async (todo) => {
+		await updateTodo(todo.id, { completed: !todo.completed });
+		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+	};
+
 	// useQuery för köra funktionen som hämtar datan
 	const {
 		data: todos,
@@ -52,7 +57,7 @@ function TodoList() {
 	// Funktion för att ta bort ifrån databasen
 	const handleDelete = async (id) => {
 		await deleteTodo(id); // 1. Ta bort från databasen
-		updateList(id); // 2. Berätta för föräldern att uppdatera UI:t
+		await updateList(id); // 2. Berätta för föräldern att uppdatera UI:t
 	};
 
 	return (
@@ -75,7 +80,11 @@ function TodoList() {
 						})
 						.map((todo) => (
 							<li key={todo.id} className="todoList">
-								<TodoCheckbox todo={todo} />
+								<TodoCheckbox
+									todo={todo}
+									checked={todo.completed}
+									onChange={() => handleCheckboxes(todo)}
+								/>
 								{todo.id === editingId ? (
 									<>
 										<TodoInput
@@ -111,11 +120,6 @@ function TodoList() {
 												startEdit(todo.id, todo.title)
 											}
 										/>
-										// <EditBtn
-										// 	id={todo.id}
-										// 	currentTitle={todo.title}
-										// 	onStartEdit={startEdit}
-										// />
 									)}
 									<Btn
 										id={todo.id}

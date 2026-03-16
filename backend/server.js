@@ -72,7 +72,7 @@ app.put("/updateTodos/:id", async (req, res) => {
 
 		const todoRef = db.collection("Todos").doc(todoID);
 		await todoRef.set(updates, { merge: true });
-		res.status(200).send("Update Succesfull");
+		res.status(200).json({ message: "Update Successful" });
 	} catch (error) {
 		console.log("Error updating todo");
 		res.status(500).json({ error: "Something went wrong" });

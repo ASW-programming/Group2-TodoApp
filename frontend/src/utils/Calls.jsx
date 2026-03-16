@@ -65,6 +65,13 @@ export const updateTodo = async (id, updates) => {
 		}
 
 		const text = await response.text();
+
+		if (!response.ok) {
+			throw new Error(
+				`Failed to update todo: ${response.status} - ${text}`,
+			);
+		}
+
 		return text ? JSON.parse(text) : null;
 	} catch (error) {
 		console.error(error);

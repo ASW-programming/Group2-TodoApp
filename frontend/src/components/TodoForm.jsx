@@ -5,8 +5,6 @@ import Btn from "./Btn";
 import PostSVG from "../assets/PostSVG";
 import { postTodos } from "../utils/Calls";
 
-const api_url = "http://localhost:3000";
-
 function TodoForm() {
 	const [task, setTask] = useState("");
 	const queryClient = useQueryClient();
