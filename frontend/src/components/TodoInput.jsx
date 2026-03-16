@@ -7,8 +7,8 @@ function TodoInput(props) {
 				id="inputField"
 				className="todoInput"
 				value={props.task}
-				onChange={(e) => props.setTask(e.target.value)}
-				placeholder="Enter text"
+				onChange={props.onChange}
+				placeholder={props.placeholder}
 			/>
 
 			<span className="inputHighlight"></span>
