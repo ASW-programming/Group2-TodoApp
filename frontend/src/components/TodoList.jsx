@@ -95,7 +95,7 @@ function TodoList() {
 							return a.createdAt._seconds - b.createdAt._seconds;
 						})
 						.map((todo) => (
-							<li key={todo.id} className="todoList">
+							<li key={todo.id} className={`todoList ${todo.completed ? "completed" : ""}`}>
 								<TodoCheckbox todo={todo} />
 
 								{todo.id === editingId ? (
