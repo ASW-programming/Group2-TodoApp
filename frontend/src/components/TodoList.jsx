@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { deleteTodo, getTodos, updateTodo } from "../utils/Calls";
 import TodoCheckbox from "./Checkboxes";
+import TodoInput from "./TodoInput.jsx";
 import Btn from "./Btn";
 import DeleteSVG from "../assets/DeleteSVG";
-import { deleteTodo, getTodos, updateTodo } from "../utils/Calls";
 import EditSVG from "../assets/EditSVG";
-import TodoInput from "./TodoInput.jsx";
 import SaveSVG from "../assets/SaveSVG.jsx";
 
 function TodoList() {
@@ -13,23 +13,6 @@ function TodoList() {
 
 	const [editingId, setEditingId] = useState(null);
 	const [editedText, setEditedText] = useState("");
-
-	const startEdit = (id, currentTitle) => {
-		setEditingId(id);
-		setEditedText(currentTitle);
-	};
-
-	const handleSaveEdit = async () => {
-		console.log("id:", editingId, "text:", editedText);
-		await updateTodo(editingId, { title: editedText });
-		setEditingId(null);
-		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
-	};
-
-	const handleCheckboxes = async (todo) => {
-		await updateTodo(todo.id, { completed: !todo.completed });
-		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
-	};
 
 	// useQuery för köra funktionen som hämtar datan
 	const {
@@ -40,9 +23,26 @@ function TodoList() {
 	} = useQuery({ queryKey: ["getTodos"], queryFn: getTodos });
 
 	// Säger till query att listan behövs hämtas igen när något plockats bort
-	function updateList() {
-		queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+	async function updateList() {
+		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 	}
+
+	const startEdit = (id, currentTitle) => {
+		setEditingId(id);
+		setEditedText(currentTitle);
+	};
+
+	const handleSaveEdit = async () => {
+		console.log("id:", editingId, "text:", editedText);
+		await updateTodo(editingId, { title: editedText });
+		setEditingId(null);
+		updateList();
+	};
+
+	const handleCheckboxes = async (todo) => {
+		await updateTodo(todo.id, { completed: !todo.completed });
+		updateList();
+	};
 
 	// Om connection är långsam
 	if (isLoading) {
