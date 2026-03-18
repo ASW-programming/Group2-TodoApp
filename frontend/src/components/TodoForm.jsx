@@ -1,37 +1,44 @@
 import { useState } from "react";
-import TodoInput from "./TodoInput";
 import { useQueryClient } from "@tanstack/react-query";
+import { postTodos } from "../utils/Calls";
 import Btn from "./Btn";
 import PostSVG from "../assets/PostSVG";
-import { postTodos } from "../utils/Calls";
+import TodoInput from "./TodoInput";
 
 function TodoForm() {
-	const [task, setTask] = useState("");
+	const [todo, setTodo] = useState("");
 	const queryClient = useQueryClient();
+
+	// Säger till query att listan behövs hämtas igen när något plockats bort
+	async function updateList() {
+		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+	}
 
 	// Förhindrar att sidan laddas om vid submit
 	const handleSubmit = async (e) => {
 		// Stoppar default behavior
 		e.preventDefault();
 		// Kolla ifall input är tomt
-		if (!task.trim()) return;
+		if (!todo.trim()) return;
 
-		await postTodos(task);
+		await postTodos(todo);
 
-		queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+		updateList();
 
-		setTask("");
+		setTodo("");
 	};
 
 	return (
 		<div>
 			<form id="todoForm" onSubmit={handleSubmit}>
-				{/* Skickar task och setTask till TodoInput via props */}
+				{/* Skickar todo och setTodo till TodoInput via props */}
 				<TodoInput
-					task={task}
-					setTask={setTask}
+					value={todo}
+					setTodo={setTodo}
 					placeholder="Add todo"
-					onChange={(e) => setTask(e.target.value)}
+					onChange={(e) => setTodo(e.target.value)}
+					className="todoInput"
+					type="text"
 				/>
 				<Btn
 					text="Submit"

@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { deleteTodo, getTodos, updateTodo } from "../utils/Calls";
-import TodoCheckbox from "./Checkboxes";
 import TodoInput from "./TodoInput.jsx";
 import Btn from "./Btn";
 import DeleteSVG from "../assets/DeleteSVG";
@@ -22,6 +21,16 @@ function TodoList() {
 		error,
 	} = useQuery({ queryKey: ["getTodos"], queryFn: getTodos });
 
+	// Om connection är långsam
+	if (isLoading) {
+		return <p>Loading todos</p>;
+	}
+
+	// Ifall fetch misslyckas.
+	if (isError) {
+		return <p>An Error Occurred: {error.message}</p>;
+	}
+
 	// Säger till query att listan behövs hämtas igen när något plockats bort
 	async function updateList() {
 		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
@@ -36,23 +45,17 @@ function TodoList() {
 		console.log("id:", editingId, "text:", editedText);
 		await updateTodo(editingId, { title: editedText });
 		setEditingId(null);
+
+		// queryClient
 		updateList();
 	};
 
 	const handleCheckboxes = async (todo) => {
 		await updateTodo(todo.id, { completed: !todo.completed });
+
+		// queryClient
 		updateList();
 	};
-
-	// Om connection är långsam
-	if (isLoading) {
-		return <p>laddar todos</p>;
-	}
-
-	// Ifall fetch misslyckas.
-	if (isError) {
-		return <p>ett fel uppstod: {error.message}</p>;
-	}
 
 	// Funktion för att ta bort ifrån databasen
 	const handleDelete = async (id) => {
@@ -80,15 +83,18 @@ function TodoList() {
 						})
 						.map((todo) => (
 							<li key={todo.id} className="todoList">
-								<TodoCheckbox
+								<TodoInput
 									todo={todo}
 									checked={todo.completed}
 									onChange={() => handleCheckboxes(todo)}
+									type="checkbox"
+									className="todoCheckbox"
 								/>
+
 								{todo.id === editingId ? (
 									<>
 										<TodoInput
-											task={editedText}
+											value={editedText}
 											onChange={(e) =>
 												setEditedText(e.target.value)
 											}
