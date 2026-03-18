@@ -99,7 +99,7 @@ function TodoList() {
 								<TodoCheckbox todo={todo} />
 
 								{todo.id === editingId ? (
-									<>
+									<div className="editMode">
 										<TodoInput
 											value={editedText}
 											onChange={(e) =>
@@ -109,7 +109,7 @@ function TodoList() {
 										/>
 
 										<SaveBtn onClick={handleSave} />
-									</>
+									</div>
 								) : (
 									<span
 										style={{
