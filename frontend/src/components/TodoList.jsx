@@ -82,7 +82,9 @@ function TodoList() {
 							return a.createdAt._seconds - b.createdAt._seconds; // Äldst först inom gruppen
 						})
 						.map((todo) => (
-							<li key={todo.id} className="todoList">
+							<li
+								key={todo.id}
+								className={`todoList ${todo.completed ? "completed" : ""}`}>
 								<TodoInput
 									todo={todo}
 									checked={todo.completed}
@@ -92,20 +94,25 @@ function TodoList() {
 								/>
 
 								{todo.id === editingId ? (
-									<>
+									<div
+										className="editMode"
+										style={{ display: "flex" }}>
 										<TodoInput
 											value={editedText}
 											onChange={(e) =>
 												setEditedText(e.target.value)
 											}
 											placeholder="Edit todo"
+											className="todoInput"
 										/>
 										<Btn
+											btnClassName="btn"
 											onClick={handleSaveEdit}
-											text="Save"
+											spanText="Save"
 											svg={<SaveSVG />}
+											spanClassName="btnText narrow"
 										/>
-									</>
+									</div>
 								) : (
 									<span
 										style={{
@@ -120,18 +127,22 @@ function TodoList() {
 								<div style={{ display: "flex", gap: "5px" }}>
 									{todo.id !== editingId && (
 										<Btn
-											text="Edit"
+											btnClassName="btn"
+											spanText="Edit"
 											svg={<EditSVG />}
 											onClick={() =>
 												startEdit(todo.id, todo.title)
 											}
+											spanClassName="btnText narrow"
 										/>
 									)}
 									<Btn
+										btnClassName="btn"
 										id={todo.id}
-										text="Remove"
+										spanText="Delete"
 										svg={<DeleteSVG />}
 										onClick={() => handleDelete(todo.id)}
+										spanClassName="btnText"
 									/>
 								</div>
 							</li>

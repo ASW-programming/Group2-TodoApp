@@ -2,12 +2,12 @@ function Btn(props) {
 	return (
 		<div>
 			<button
-				className="btn"
+				className={props.btnClassName}
 				onClick={props.onClick}
 				type={props.type}
 				id={props.id}>
 				{props.svg}
-				<span className="btnText">{props.text}</span>
+				<span className={props.spanClassName}>{props.spanText}</span>
 			</button>
 		</div>
 	);

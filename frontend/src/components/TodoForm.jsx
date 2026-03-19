@@ -33,15 +33,17 @@ function TodoForm() {
 			<form id="todoForm" onSubmit={handleSubmit}>
 				{/* Skickar todo och setTodo till TodoInput via props */}
 				<TodoInput
+					type="text"
 					value={todo}
 					setTodo={setTodo}
 					placeholder="Add todo"
 					onChange={(e) => setTodo(e.target.value)}
 					className="todoInput"
-					type="text"
 				/>
 				<Btn
-					text="Submit"
+					btnClassName="btn"
+					spanText="Submit"
+					spanClassName="btnText"
 					svg={<PostSVG />}
 					type="submit"
 					id="submitBtn"
