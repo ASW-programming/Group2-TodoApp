@@ -54,7 +54,6 @@ app.post("/addTodo", async (req, res) => {
 			title: todo.title,
 			completed: false,
 		};
-		console.log(todo);
 		res.status(201).json({
 			message: "Todo added!",
 			todo: newTodo,
@@ -74,7 +73,7 @@ app.put("/updateTodos/:id", async (req, res) => {
 		await todoRef.set(updates, { merge: true });
 		res.status(200).json({ message: "Update Successful" });
 	} catch (error) {
-		console.log("Error updating todo");
+		console.error("Error updating todo:", error);
 		res.status(500).json({ error: "Something went wrong" });
 	}
 });
