@@ -13,7 +13,7 @@ export const getTodos = async () => {
 		const data = await res.json();
 		return data;
 	} catch (error) {
-		console.log("Could not fetch todos");
+		throw new Error("Could not fetch todos");
 	}
 };
 
