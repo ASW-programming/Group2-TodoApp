@@ -183,9 +183,6 @@ button:hover {
 	display: flex;
 	align-items: center;
 	gap: 8px;
-}
-
-.editMode {
 	flex: 1;
 	min-width: 0;
 }
