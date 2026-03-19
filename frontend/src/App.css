@@ -16,15 +16,22 @@
 /* Background */
 
 body {
-	background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/fb50b7177147275.64d15c742c4de.jpg");
-	background-position: center;
-	background-size: cover;
-	margin: 0;
-	min-height: 100vh;
+  background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/fb50b7177147275.64d15c742c4de.jpg");
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  min-height: 100vh;
 
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-attachment: fixed;
+  align-items: flex-start;
+
+  padding-top: 40px;
+  overflow: hidden;
+
 }
 
 body::before {
@@ -41,14 +48,24 @@ body::before {
 /* Main container */
 
 .card {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow-y: hidden;
+  overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 .cardBorder {
-	padding: 25px;
-	border-radius: 22px;
+  position: relative;
+  padding: 25px;
+  border-radius: 22px;
+  overflow: hidden;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(35px) saturate(100%);
+  -webkit-backdrop-filter: blur(35px) saturate(100%);
 
 	background: var(--glass-bg);
 	backdrop-filter: blur(35px) saturate(100%);
@@ -152,8 +169,37 @@ button:hover {
 	margin-top: 15px;
 	width: 100%;
 
-	color: var(--text-color);
-	font-size: 16px;
+  color: var(--text-color);
+  font-size: 16px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #7dd3fc transparent;
+
+  max-height: 300px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+  overflow-x: hidden;
+
+}
+
+/* SCROLLBAR styling*/
+
+#todoList::-webkit-scrollbar {
+  width: 8px;
+}
+
+#todoList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#todoList::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #7dd3fc, #a855f7);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+#todoList::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #a855f7, #7dd3fc);
 }
 
 .todoList {
@@ -185,6 +231,12 @@ button:hover {
 	gap: 8px;
 	flex: 1;
 	min-width: 0;
+}
+
+.todoList.completed {
+  background: rgba(26, 58, 105, 0.194);
+  color: rgba(255, 255, 255, 0.6);
+  transform: translateX(2px);
 }
 
 .todoText {
@@ -249,27 +301,26 @@ button:hover {
 
 /* Stil och positionering av tooltip-text */
 .btn .btnText {
-	visibility: hidden;
-	width: 45px;
+  visibility: hidden;
+  width: 45px;
 
-	background: rgba(0, 0, 0, 0.317);
-	color: white;
+  background: rgba(0, 0, 0, 0.317);
+  color: white;
 
-	text-align: center;
-	font-size: 12px;
-	border-radius: 6px;
-	padding: 3px;
-	margin: 3px;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 3px;
+  margin: 3px;
 
-	position: absolute;
-	left: 50%;
-	bottom: 100%; /* Positionerar tooltip ovanför knappen */
-	transform: translateX(-55%); /* Justerar horisontellt för centrering */
+  position: absolute;
+  left: 50%; 
+  bottom: 100%;
+  transform: translateX(-55%); /* Flyttar till vänster med hälften och centrerar */
 }
 
-/* Smalare variant för kortare tooltip-text*/
-.btn .btnText.narrow {
-	width: 40px;
+.btn .btnText .narrow {
+width: 40px;
 }
 
 /* Visar tooltip vid hover */
