@@ -6,14 +6,14 @@ export const getTodos = async () => {
 		const res = await fetch(`${API_URL}/getTodos`);
 
 		if (!res.ok) {
-			throw new Error("Kunde inte hämta todos");
+			throw new Error("Could not get todos");
 		}
 
 		// Omvandla response till JSON så det kan användas.
 		const data = await res.json();
 		return data;
 	} catch (error) {
-		throw new Error("Could not fetch todos");
+		throw new Error(`Could not fetch todos: ${error.message}`);
 	}
 };
 
@@ -25,12 +25,17 @@ export const postTodos = async (title) => {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ title }),
 		});
-		if (!postTodo.ok) throw new Error("Failed to create todo");
+
+		if (!postTodo.ok) {
+			throw new Error("Failed to create todo");
+		}
+
 		const data = await postTodo.json();
 		console.log("Created todo:", data);
+
 		return data;
 	} catch (error) {
-		console.error("Error creating todo:", error);
+		throw new Error(`Could not create todo: ${error.message}`);
 	}
 };
 
@@ -43,10 +48,12 @@ export const deleteTodo = async (id) => {
 		});
 
 		if (!response.ok) {
-			throw new Error("Kunde inte ta bort");
+			throw new Error("Could not delete");
 		}
+
+		console.log(`Deleted todo ${id}`);
 	} catch (error) {
-		console.log(error);
+		throw new Error(`Could not delete todos: ${error.message}`);
 	}
 };
 
@@ -61,19 +68,14 @@ export const updateTodo = async (id, updates) => {
 		});
 
 		if (!response.ok) {
-			throw new Error("Failed to update todo");
-		}
-
-		const text = await response.text();
-
-		if (!response.ok) {
 			throw new Error(
-				`Failed to update todo: ${response.status} - ${text}`,
+				`Failed to update todo: ${response.status} - ${data}`,
 			);
 		}
 
-		return text ? JSON.parse(text) : null;
+		const data = await response.json();
+		return data;
 	} catch (error) {
-		console.error(error);
+		throw new Error(`Could not update todos: ${error.message}`);
 	}
 };
