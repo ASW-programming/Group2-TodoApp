@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:3000";
 
-// Functionen som hämtar data som vi sedan lägger i listan
+// Funktionen som hämtar data som vi sedan lägger i listan
 export const getTodos = async () => {
 	try {
 		const res = await fetch(`${API_URL}/getTodos`);
