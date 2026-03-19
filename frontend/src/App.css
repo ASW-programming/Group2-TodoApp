@@ -185,6 +185,12 @@ button:hover {
   transform: translateY(-2px);
 }
 
+.todoList.completed {
+  background: rgba(26, 58, 105, 0.194);
+  color: rgba(255, 255, 255, 0.6);
+  transform: translateX(2px);
+}
+
 .todoText {
   flex: 1;
   margin-left: 14px;
