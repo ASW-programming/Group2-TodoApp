@@ -39,7 +39,7 @@ function Btn(props) {
 						fillRule="evenodd"
 					/>
 				</svg>
-				<span className="btnText">Remove</span>
+				<span className="btnText">Delete</span>
 				{props.btnText}
 			</button>
 		</div>
