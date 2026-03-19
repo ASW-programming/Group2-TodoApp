@@ -13,7 +13,6 @@ function TodoList() {
 	const [editingId, setEditingId] = useState(null);
 	const [editedText, setEditedText] = useState("");
 
-	// useQuery för köra funktionen som hämtar datan
 	const {
 		data: todos,
 		isLoading,
@@ -21,12 +20,10 @@ function TodoList() {
 		error,
 	} = useQuery({ queryKey: ["getTodos"], queryFn: getTodos });
 
-	// Om connection är långsam
 	if (isLoading) {
 		return <p>Loading todos</p>;
 	}
 
-	// Ifall fetch misslyckas.
 	if (isError) {
 		return <p>An Error Occurred: {error.message}</p>;
 	}
@@ -66,20 +63,16 @@ function TodoList() {
 	return (
 		<div>
 			<ul id="todoList">
-				{/* Listan för alla todos */}
 				{todos.length === 0 ? (
 					<p>Inga todos än!</p>
 				) : (
 					todos
-						// Skapa en kopia av arrayen
 						.slice()
-
-						// Sortera listan efter sekunder-skapad och efter completed true/false
 						.sort((a, b) => {
 							if (a.completed !== b.completed) {
-								return a.completed - b.completed; // Ofärdiga först
+								return a.completed - b.completed;
 							}
-							return a.createdAt._seconds - b.createdAt._seconds; // Äldst först inom gruppen
+							return a.createdAt._seconds - b.createdAt._seconds;
 						})
 						.map((todo) => (
 							<li
