@@ -79,12 +79,14 @@ app.put("/updateTodos/:id", async (req, res) => {
 	}
 });
 
-app.delete("/deleteTodos/:id", (req, res) => {
-	const todoID = req.params.id;
-
-	const todoRef = db.collection("Todos").doc(todoID).delete();
-
-	res.status(200).send("Borttagen");
+app.delete("/deleteTodos/:id", async (req, res) => {
+	try {
+		const todoID = req.params.id;
+		const todoRef = await db.collection("Todos").doc(todoID).delete();
+		res.status(200).json({ message: "deleted" });
+	} catch (error) {
+		res.status(500).json({ error: "Something went wrong" });
+	}
 });
 
 app.listen(PORT, () => {
