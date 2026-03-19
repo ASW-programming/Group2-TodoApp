@@ -259,12 +259,12 @@ button:hover {
   margin: 3px;
 
   position: absolute;
-  left: 50%; /* Changed from 120% */
-  bottom: 100%; /* Changed from 20% */
+  left: 50%; 
+  bottom: 100%;
   transform: translateX(-55%); /* Flyttar till vänster med hälften och centrerar */
 }
 
-.btn .btnText.narrow {
+.btn .btnText .narrow {
 width: 40px;
 }
 
