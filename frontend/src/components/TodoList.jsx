@@ -1,83 +1,63 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import TodoCheckbox from "./Checkboxes";
+import { deleteTodo, getTodos, updateTodo } from "../utils/Calls";
+import TodoInput from "./TodoInput.jsx";
 import Btn from "./Btn";
-import EditBtn from "./EditBtn";
-import SaveBtn from "./SaveBtn";
-import TodoInput from "./TodoInput";
+import DeleteSVG from "../assets/DeleteSVG";
+import EditSVG from "../assets/EditSVG";
+import SaveSVG from "../assets/SaveSVG.jsx";
 
 function TodoList() {
-	const api_url = "http://localhost:3000";
 	const queryClient = useQueryClient();
 
 	const [editingId, setEditingId] = useState(null);
 	const [editedText, setEditedText] = useState("");
-
-	async function getData() {
-		try {
-			const res = await fetch(`${api_url}/getTodos`);
-
-			if (!res.ok) {
-				throw new Error("Kunde inte hämta todos");
-			}
-
-			const data = await res.json();
-			return data;
-		} catch (error) {
-			throw new Error("Could not fetch");
-		}
-	}
 
 	const {
 		data: todos,
 		isLoading,
 		isError,
 		error,
-	} = useQuery({ queryKey: ["getTodos"], queryFn: getData });
-
-	function deleteUpdateList() {
-		queryClient.invalidateQueries({ queryKey: ["getTodos"] });
-	}
+	} = useQuery({ queryKey: ["getTodos"], queryFn: getTodos });
 
 	if (isLoading) {
-		return <p>laddar todos</p>;
+		return <p>Loading todos</p>;
 	}
 
 	if (isError) {
-		return <p>ett fel uppstod: {error.message}</p>;
+		return <p>An Error Occurred: {error.message}</p>;
 	}
 
-	if (!todos) return null;
+	// Säger till query att listan behövs hämtas igen när något plockats bort
+	async function updateList() {
+		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+	}
 
 	const startEdit = (id, currentTitle) => {
 		setEditingId(id);
 		setEditedText(currentTitle);
 	};
 
-	const handleSave = async () => {
-		try {
-			const response = await fetch(
-				`${api_url}/updateTodos/${editingId}`,
-				{
-					method: "PUT",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						title: editedText,
-					}),
-				},
-			);
+	const handleSaveEdit = async () => {
+		console.log("id:", editingId, "text:", editedText);
+		await updateTodo(editingId, { title: editedText });
+		setEditingId(null);
 
-			if (!response.ok) {
-				throw new Error("Failed to update todo");
-			}
+		// queryClient
+		updateList();
+	};
 
-			setEditingId(null);
-			queryClient.invalidateQueries({ queryKey: ["getTodos"] });
-		} catch (error) {
-			console.error(error);
-		}
+	const handleCheckboxes = async (todo) => {
+		await updateTodo(todo.id, { completed: !todo.completed });
+
+		// queryClient
+		updateList();
+	};
+
+	// Funktion för att ta bort ifrån databasen
+	const handleDelete = async (id) => {
+		await deleteTodo(id); // 1. Ta bort från databasen
+		await updateList(id); // 2. Berätta för föräldern att uppdatera UI:t
 	};
 
 	return (
@@ -95,20 +75,36 @@ function TodoList() {
 							return a.createdAt._seconds - b.createdAt._seconds;
 						})
 						.map((todo) => (
-							<li key={todo.id} className={`todoList ${todo.completed ? "completed" : ""}`}>
-								<TodoCheckbox todo={todo} />
+							<li
+								key={todo.id}
+								className={`todoList ${todo.completed ? "completed" : ""}`}>
+								<TodoInput
+									todo={todo}
+									checked={todo.completed}
+									onChange={() => handleCheckboxes(todo)}
+									type="checkbox"
+									className="todoCheckbox"
+								/>
 
 								{todo.id === editingId ? (
-									<div className="editMode">
+									<div
+										className="editMode"
+										style={{ display: "flex" }}>
 										<TodoInput
 											value={editedText}
 											onChange={(e) =>
 												setEditedText(e.target.value)
 											}
 											placeholder="Edit todo"
+											className="todoInput"
 										/>
-
-										<SaveBtn onClick={handleSave} />
+										<Btn
+											btnClassName="btn"
+											onClick={handleSaveEdit}
+											spanText="Save"
+											svg={<SaveSVG />}
+											spanClassName="btnText narrow"
+										/>
 									</div>
 								) : (
 									<span
@@ -123,15 +119,23 @@ function TodoList() {
 
 								<div style={{ display: "flex", gap: "5px" }}>
 									{todo.id !== editingId && (
-										<EditBtn
-											id={todo.id}
-											currentTitle={todo.title}
-											onStartEdit={startEdit}
+										<Btn
+											btnClassName="btn"
+											spanText="Edit"
+											svg={<EditSVG />}
+											onClick={() =>
+												startEdit(todo.id, todo.title)
+											}
+											spanClassName="btnText narrow"
 										/>
 									)}
 									<Btn
+										btnClassName="btn"
 										id={todo.id}
-										onDelete={deleteUpdateList}
+										spanText="Delete"
+										svg={<DeleteSVG />}
+										onClick={() => handleDelete(todo.id)}
+										spanClassName="btnText"
 									/>
 								</div>
 							</li>

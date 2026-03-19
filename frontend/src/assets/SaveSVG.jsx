@@ -1,11 +1,11 @@
-function SaveBtn(props) {
+function SaveSVG() {
 	return (
-		<button className="btn" onClick={props.onClick}>
+		<div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="25"
 				height="25"
-				viewBox="0 0 24 24"
+				viewBox="0 0 25 25"
 				fill="none"
 				stroke="#fff"
 				strokeWidth="2"
@@ -14,9 +14,8 @@ function SaveBtn(props) {
 				<path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
 				<path d="M7 3v4a1 1 0 0 0 1 1h7" />
 			</svg>
-			<span className="btnText">Save</span>
-		</button>
+		</div>
 	);
 }
 
-export default SaveBtn;
+export default SaveSVG;

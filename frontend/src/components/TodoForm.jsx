@@ -1,52 +1,53 @@
 import { useState } from "react";
-import TodoInput from "./TodoInput";
-import SubmitBtn from "./SubmitBtn";
 import { useQueryClient } from "@tanstack/react-query";
-
-const api_url = "http://localhost:3000";
+import { postTodos } from "../utils/Calls";
+import Btn from "./Btn";
+import PostSVG from "../assets/PostSVG";
+import TodoInput from "./TodoInput";
 
 function TodoForm() {
-	const [task, setTask] = useState("");
-
+	const [todo, setTodo] = useState("");
 	const queryClient = useQueryClient();
+
+	// Säger till query att listan behövs hämtas igen när något plockats bort
+	async function updateList() {
+		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+	}
 
 	// Förhindrar att sidan laddas om vid submit
 	const handleSubmit = async (e) => {
 		// Stoppar default behavior
 		e.preventDefault();
 		// Kolla ifall input är tomt
-		if (!task.trim()) return;
+		if (!todo.trim()) return;
 
-		// Post
-		try {
-			const postTodo = await fetch(`${api_url}/addTodo`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ title: task }),
-			});
-			if (!postTodo.ok) throw new Error("Failed to create todo");
-			const data = await postTodo.json();
-			setTask("");
+		await postTodos(todo);
 
-			queryClient.invalidateQueries({ queryKey: ["getTodos"] });
+		updateList();
 
-			console.log("Created todo:", data);
-		} catch (error) {
-			console.error("Error creating todo:", error);
-		}
+		setTodo("");
 	};
 
 	return (
 		<div>
 			<form id="todoForm" onSubmit={handleSubmit}>
-				{/* Skickar task och setTask till TodoInput via props */}
+				{/* Skickar todo och setTodo till TodoInput via props */}
 				<TodoInput
-					task={task}
-					setTask={setTask}
+					type="text"
+					value={todo}
+					setTodo={setTodo}
 					placeholder="Add todo"
-					onChange={(e) => setTask(e.target.value)}
+					onChange={(e) => setTodo(e.target.value)}
+					className="todoInput"
 				/>
-				<SubmitBtn />
+				<Btn
+					btnClassName="btn"
+					spanText="Submit"
+					spanClassName="btnText"
+					svg={<PostSVG />}
+					type="submit"
+					id="submitBtn"
+				/>
 			</form>
 		</div>
 	);

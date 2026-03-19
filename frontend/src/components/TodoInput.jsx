@@ -3,16 +3,17 @@ function TodoInput(props) {
 	return (
 		<div className="inputContainer">
 			<input
-				type="text"
+				type={props.type}
 				id="inputField"
-				className="todoInput"
-				value={props.task}
+				className={props.className}
+				value={props.value}
 				onChange={props.onChange}
 				placeholder={props.placeholder}
+				checked={props.checked}
 			/>
 
-            <span className="inputHighlight"></span>
-        </div>
-    );
+			<span className="inputHighlight"></span>
+		</div>
+	);
 }
 export default TodoInput;
