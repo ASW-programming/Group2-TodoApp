@@ -1,16 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 * {
-	box-sizing: border-box;
-	font-family: "Inter", "Poppins", sans-serif;
+  box-sizing: border-box;
+  font-family: "Inter", "Poppins", sans-serif;
 }
 
 :root {
-	--glass-bg: rgba(255, 255, 255, 0.22);
-	--glass-border: rgba(255, 255, 255, 0.555);
-	--glass-hover: rgba(255, 255, 255, 0.28);
-	--text-color: #ffffff;
-	--accent-gradient: linear-gradient(135deg, #7dd3fc, #a855f7);
+  --glass-bg: rgba(255, 255, 255, 0.22);
+  --glass-border: rgba(255, 255, 255, 0.555);
+  --glass-hover: rgba(255, 255, 255, 0.28);
+  --text-color: #ffffff;
+  --accent-gradient: linear-gradient(135deg, #7dd3fc, #a855f7);
 }
 
 /* Background */
@@ -35,14 +35,14 @@ body {
 }
 
 body::before {
-	content: "";
-	position: fixed;
-	inset: 0;
+  content: "";
+  position: fixed;
+  inset: 0;
 
-	background: rgba(126, 0, 101, 0);
-	pointer-events: none;
+  background: rgba(126, 0, 101, 0);
+  pointer-events: none;
 
-	z-index: -1;
+  z-index: -1;
 }
 
 /* Main container */
@@ -52,8 +52,7 @@ body::before {
   justify-content: center;
   align-items: center;
 
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow: visible;
   scrollbar-width: none;
 }
 
@@ -67,107 +66,105 @@ body::before {
   backdrop-filter: blur(35px) saturate(100%);
   -webkit-backdrop-filter: blur(35px) saturate(100%);
 
-	background: var(--glass-bg);
-	backdrop-filter: blur(35px) saturate(100%);
-	-webkit-backdrop-filter: blur(35px) saturate(100%);
+  background: var(--glass-bg);
+  backdrop-filter: blur(35px) saturate(100%);
+  -webkit-backdrop-filter: blur(35px) saturate(100%);
 
-	border: 2px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
 
-	box-shadow: 0 15px 40px rgba(0, 0, 0, 0),
-		inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
 
-	color: var(--text-color);
-	text-align: center;
+  color: var(--text-color);
+  text-align: center;
 }
 
 .cardBorder::after {
-	content: "";
-	position: absolute;
-	inset: -40px;
-	z-index: -1;
+  content: "";
+  position: absolute;
+  inset: -40px;
+  z-index: -1;
 
-	background: radial-gradient(
-		circle 700px at center,
-		rgba(47, 12, 247, 0.213),
-		transparent 70%
-	);
+  background: radial-gradient(circle 700px at center,
+      rgba(47, 12, 247, 0.213),
+      transparent 70%);
 
-	filter: blur(90px);
+  filter: blur(90px);
 }
 
 #todoForm {
-	display: flex;
-	padding: 10px;
-	gap: 10px;
+  display: flex;
+  padding: 10px;
+  gap: 10px;
 }
 
 .todoTitle {
-	font-size: 30px;
-	font-weight: 800;
-	letter-spacing: -0.5px;
-	margin-bottom: 10px;
-	font-family: "Inter", "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+  font-family: "Inter", "Poppins", sans-serif;
 
-	color: var(--text-color);
+  color: var(--text-color);
 }
 
 .inputContainer {
-	position: relative;
-	display: flex;
-	flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .todoInput {
-	color: var(--text-color);
-	width: 220px;
-	padding: 10px 14px;
-	font-size: 18px;
+  color: var(--text-color);
+  width: 220px;
+  padding: 10px 14px;
+  font-size: 18px;
 
-	border-radius: 20px;
-	border: none;
+  border-radius: 20px;
+  border: none;
 
-	background: rgba(255, 255, 255, 0.198);
+  background: rgba(255, 255, 255, 0.198);
 
-	outline: none;
+  outline: none;
 
-	transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 .todoInput::placeholder {
-	color: rgba(104, 24, 141, 0.21);
+  color: rgba(104, 24, 141, 0.21);
 }
 
 .todoInput:focus {
-	background: rgba(255, 255, 255, 0.32);
-	border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.55);
 
-	box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 button {
-	padding: 8px 12px;
-	border-radius: 15px;
+  padding: 8px 12px;
+  border-radius: 15px;
 
-	border: none;
+  border: none;
 
-	background: var(--glass-bg);
+  background: var(--glass-bg);
 
-	color: white;
-	cursor: pointer;
+  color: white;
+  cursor: pointer;
 
-	transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 button:hover {
-	background-color: rgba(221, 245, 255, 0.487);
-	transform: scale(1.05);
+  background-color: rgba(221, 245, 255, 0.487);
+  transform: scale(1.05);
 }
 
 #todoList {
-	list-style: none;
-	padding: 0;
-	margin-top: 15px;
-	width: 100%;
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+  width: 100%;
 
   color: var(--text-color);
   font-size: 16px;
@@ -203,34 +200,38 @@ button:hover {
 }
 
 .todoList {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  /* ensure it can stack */
+  z-index: 0;
 
-	padding: 10px 14px;
-	margin: 8px 0;
+  padding: 10px 14px;
+  margin: 8px 0;
 
-	border-radius: 25px;
+  border-radius: 25px;
 
-	background: rgba(255, 255, 255, 0.008);
-	backdrop-filter: blur(1px);
+  background: rgba(255, 255, 255, 0.008);
+  backdrop-filter: blur(1px);
 
-	border: 1px solid rgba(255, 255, 255, 0.027);
+  border: 1px solid rgba(255, 255, 255, 0.027);
 
-	transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 .todoList:hover {
-	background: rgba(255, 255, 255, 0.25);
-	transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  z-index: 10;
 }
 
 .editMode {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	flex: 1;
-	min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
 }
 
 .todoList.completed {
@@ -240,63 +241,63 @@ button:hover {
 }
 
 .todoText {
-	flex: 1;
-	margin-left: 14px;
-	color: rgb(255, 255, 255);
-	font-weight: 500;
-	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  flex: 1;
+  margin-left: 14px;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 .todoText.completed {
-	opacity: 0.45;
-	transform: translateX(6px);
+  opacity: 0.45;
+  transform: translateX(6px);
 }
 
 .todoCheckbox {
-	-webkit-appearance: none;
-	appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
 
-	width: 20px;
-	height: 20px;
+  width: 20px;
+  height: 20px;
 
-	border-radius: 6px;
-	border: none;
+  border-radius: 6px;
+  border: none;
 
-	background: rgba(255, 255, 255, 0.359);
+  background: rgba(255, 255, 255, 0.359);
 
-	cursor: pointer;
-	position: relative;
+  cursor: pointer;
+  position: relative;
 
-	transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .todoCheckbox:hover {
-	background: rgba(55, 92, 226, 0.4);
+  background: rgba(55, 92, 226, 0.4);
 }
 
 .todoCheckbox:checked {
-	border: none;
+  border: none;
 }
 
 .todoCheckbox:checked::after {
-	content: "";
-	position: absolute;
+  content: "";
+  position: absolute;
 
-	width: 5px;
-	height: 10px;
+  width: 5px;
+  height: 10px;
 
-	border: solid white;
-	border-width: 0 2px 2px 0;
+  border: solid white;
+  border-width: 0 2px 2px 0;
 
-	transform: rotate(45deg);
+  transform: rotate(45deg);
 
-	top: 3px;
-	left: 7px;
+  top: 3px;
+  left: 7px;
 }
 
 .btn {
-	position: relative;
-	display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 /* Stil och positionering av tooltip-text */
@@ -314,16 +315,19 @@ button:hover {
   margin: 3px;
 
   position: absolute;
-  left: 50%; 
-  bottom: 100%;
-  transform: translateX(-55%); /* Flyttar till vänster med hälften och centrerar */
+  top: 100%;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  z-index: 999;
 }
 
 .btn .btnText .narrow {
-width: 40px;
+  width: 40px;
 }
 
 /* Visar tooltip vid hover */
 .btn:hover .btnText {
-	visibility: visible;
+  visibility: visible;
 }
