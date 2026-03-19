@@ -6,6 +6,7 @@ import Btn from "./Btn";
 import DeleteSVG from "../assets/DeleteSVG";
 import EditSVG from "../assets/EditSVG";
 import SaveSVG from "../assets/SaveSVG.jsx";
+import CancelSVG from "../assets/CancelSVG.jsx";
 
 function TodoList() {
 	const queryClient = useQueryClient();
@@ -87,9 +88,7 @@ function TodoList() {
 								/>
 
 								{todo.id === editingId ? (
-									<div
-										className="editMode"
-										style={{ display: "flex" }}>
+									<div className="editMode">
 										<TodoInput
 											value={editedText}
 											onChange={(e) =>
@@ -104,6 +103,13 @@ function TodoList() {
 											spanText="Save"
 											svg={<SaveSVG />}
 											spanClassName="btnText narrow"
+										/>
+										<Btn
+											btnClassName="btn"
+											onClick={() => setEditingId(null)}
+											spanText="Cancel"
+											svg={<CancelSVG />}
+											spanClassName="btnText"
 										/>
 									</div>
 								) : (
@@ -129,14 +135,18 @@ function TodoList() {
 											spanClassName="btnText narrow"
 										/>
 									)}
-									<Btn
-										btnClassName="btn"
-										id={todo.id}
-										spanText="Delete"
-										svg={<DeleteSVG />}
-										onClick={() => handleDelete(todo.id)}
-										spanClassName="btnText"
-									/>
+									{todo.id !== editingId && (
+										<Btn
+											btnClassName="btn"
+											id={todo.id}
+											spanText="Delete"
+											svg={<DeleteSVG />}
+											onClick={() =>
+												handleDelete(todo.id)
+											}
+											spanClassName="btnText"
+										/>
+									)}
 								</div>
 							</li>
 						))
