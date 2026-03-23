@@ -17,6 +17,12 @@ Made by:
 - Edit existing todos
 - Delete existing todos
 
+## Requirements
+
+- [GIT](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en)
+- [Firebase](https://console.firebase.google.com/u/1/)
+
 ## Packages
 
 - [Concurrently](https://www.npmjs.com/package/concurrently)
@@ -26,12 +32,6 @@ Made by:
 - [Express](https://www.npmjs.com/package/express)
 - [Cors](https://www.npmjs.com/package/cors)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
-
-## Requirements
-
-- [GIT](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)
-- [Firebase](https://console.firebase.google.com/u/1/)
 
 ## Getting started
 
