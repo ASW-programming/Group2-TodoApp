@@ -1,4 +1,3 @@
-// Tar emot task och setTask från TodoForm via props
 function TodoInput(props) {
 	return (
 		<div className="inputContainer">
