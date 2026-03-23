@@ -145,7 +145,6 @@ function TodoList() {
 										// Delete Btn
 										<Btn
 											btnClassName="btn"
-											id={todo.id}
 											spanText="Delete"
 											svg={<DeleteSVG />}
 											onClick={() =>
