@@ -29,7 +29,7 @@ function TodoList() {
 		return <p>An Error Occurred: {error.message}</p>;
 	}
 
-	// Säger till query att listan behövs hämtas igen när något plockats bort
+	// Säger till useQuery att listan behövs hämtas igen när något plockats bort
 	async function updateList() {
 		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 	}
@@ -42,7 +42,9 @@ function TodoList() {
 	const handleSaveEdit = async () => {
 		console.log("id:", editingId, "text:", editedText);
 		await updateTodo(editingId, { title: editedText });
+
 		if (!editedText.trim()) return;
+
 		setEditingId(null);
 
 		// queryClient

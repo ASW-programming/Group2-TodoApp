@@ -18,13 +18,16 @@ function TodoForm() {
 	const handleSubmit = async (e) => {
 		// Stoppar default behavior
 		e.preventDefault();
+
 		// Kolla ifall input är tomt
 		if (!todo.trim()) return;
 
+		// Skickar todo till DB.
 		await postTodos(todo);
 
 		updateList();
 
+		// Töm input
 		setTodo("");
 	};
 
