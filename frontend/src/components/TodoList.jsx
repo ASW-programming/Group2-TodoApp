@@ -97,6 +97,8 @@ function TodoList() {
 											placeholder="Edit todo"
 											className="todoInput"
 										/>
+
+										{/* Save Btn */}
 										<Btn
 											btnClassName="btn"
 											onClick={handleSaveEdit}
@@ -104,6 +106,7 @@ function TodoList() {
 											svg={<SaveSVG />}
 											spanClassName="btnText narrow"
 										/>
+										{/* Cancel Btn */}
 										<Btn
 											btnClassName="btn"
 											onClick={() => setEditingId(null)}
@@ -125,6 +128,7 @@ function TodoList() {
 
 								<div style={{ display: "flex", gap: "5px" }}>
 									{todo.id !== editingId && (
+										// Edit Btn
 										<Btn
 											btnClassName="btn"
 											spanText="Edit"
@@ -136,6 +140,7 @@ function TodoList() {
 										/>
 									)}
 									{todo.id !== editingId && (
+										// Delete Btn
 										<Btn
 											btnClassName="btn"
 											id={todo.id}
