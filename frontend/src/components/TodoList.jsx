@@ -42,6 +42,7 @@ function TodoList() {
 	const handleSaveEdit = async () => {
 		console.log("id:", editingId, "text:", editedText);
 		await updateTodo(editingId, { title: editedText });
+		if (!editedText.trim()) return;
 		setEditingId(null);
 
 		// queryClient
@@ -58,7 +59,7 @@ function TodoList() {
 	// Funktion för att ta bort ifrån databasen
 	const handleDelete = async (id) => {
 		await deleteTodo(id); // 1. Ta bort från databasen
-		await updateList(id); // 2. Berätta för föräldern att uppdatera UI:t
+		await updateList(); // 2. Berätta för föräldern att uppdatera UI:t
 	};
 
 	return (
@@ -80,7 +81,6 @@ function TodoList() {
 								key={todo.id}
 								className={`todoList ${todo.completed ? "completed" : ""}`}>
 								<TodoInput
-									todo={todo}
 									checked={todo.completed}
 									onChange={() => handleCheckboxes(todo)}
 									type="checkbox"

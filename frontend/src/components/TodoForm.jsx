@@ -35,18 +35,18 @@ function TodoForm() {
 				<TodoInput
 					type="text"
 					value={todo}
-					setTodo={setTodo}
 					placeholder="Add todo"
 					onChange={(e) => setTodo(e.target.value)}
 					className="todoInput"
 				/>
+
+				{/* Submit btn */}
 				<Btn
 					btnClassName="btn"
 					spanText="Submit"
 					spanClassName="btnText"
 					svg={<PostSVG />}
 					type="submit"
-					id="submitBtn"
 				/>
 			</form>
 		</div>

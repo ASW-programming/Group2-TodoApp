@@ -68,9 +68,7 @@ export const updateTodo = async (id, updates) => {
 		});
 
 		if (!response.ok) {
-			throw new Error(
-				`Failed to update todo: ${response.status} - ${data}`,
-			);
+			throw new Error(`Failed to update todo: ${response.status}`);
 		}
 
 		const data = await response.json();
