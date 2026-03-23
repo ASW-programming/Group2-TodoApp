@@ -11,8 +11,6 @@ function TodoInput(props) {
 				placeholder={props.placeholder}
 				checked={props.checked}
 			/>
-
-			<span className="inputHighlight"></span>
 		</div>
 	);
 }
