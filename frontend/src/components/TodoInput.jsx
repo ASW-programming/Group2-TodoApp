@@ -1,4 +1,3 @@
-// Tar emot task och setTask från TodoForm via props
 function TodoInput(props) {
 	return (
 		<div className="inputContainer">
@@ -11,8 +10,6 @@ function TodoInput(props) {
 				placeholder={props.placeholder}
 				checked={props.checked}
 			/>
-
-			<span className="inputHighlight"></span>
 		</div>
 	);
 }

@@ -29,7 +29,7 @@ function TodoList() {
 		return <p>An Error Occurred: {error.message}</p>;
 	}
 
-	// Säger till query att listan behövs hämtas igen när något plockats bort
+	// Säger till useQuery att listan behövs hämtas igen när något plockats bort
 	async function updateList() {
 		await queryClient.invalidateQueries({ queryKey: ["getTodos"] });
 	}
@@ -42,6 +42,9 @@ function TodoList() {
 	const handleSaveEdit = async () => {
 		console.log("id:", editingId, "text:", editedText);
 		await updateTodo(editingId, { title: editedText });
+
+		if (!editedText.trim()) return;
+
 		setEditingId(null);
 
 		// queryClient
@@ -58,7 +61,7 @@ function TodoList() {
 	// Funktion för att ta bort ifrån databasen
 	const handleDelete = async (id) => {
 		await deleteTodo(id); // 1. Ta bort från databasen
-		await updateList(id); // 2. Berätta för föräldern att uppdatera UI:t
+		await updateList(); // 2. Berätta för föräldern att uppdatera UI:t
 	};
 
 	return (
@@ -80,7 +83,6 @@ function TodoList() {
 								key={todo.id}
 								className={`todoList ${todo.completed ? "completed" : ""}`}>
 								<TodoInput
-									todo={todo}
 									checked={todo.completed}
 									onChange={() => handleCheckboxes(todo)}
 									type="checkbox"
@@ -97,6 +99,8 @@ function TodoList() {
 											placeholder="Edit todo"
 											className="todoInput"
 										/>
+
+										{/* Save Btn */}
 										<Btn
 											btnClassName="btn"
 											onClick={handleSaveEdit}
@@ -104,6 +108,7 @@ function TodoList() {
 											svg={<SaveSVG />}
 											spanClassName="btnText narrow"
 										/>
+										{/* Cancel Btn */}
 										<Btn
 											btnClassName="btn"
 											onClick={() => setEditingId(null)}
@@ -125,6 +130,7 @@ function TodoList() {
 
 								<div style={{ display: "flex", gap: "5px" }}>
 									{todo.id !== editingId && (
+										// Edit Btn
 										<Btn
 											btnClassName="btn"
 											spanText="Edit"
@@ -136,9 +142,9 @@ function TodoList() {
 										/>
 									)}
 									{todo.id !== editingId && (
+										// Delete Btn
 										<Btn
 											btnClassName="btn"
-											id={todo.id}
 											spanText="Delete"
 											svg={<DeleteSVG />}
 											onClick={() =>

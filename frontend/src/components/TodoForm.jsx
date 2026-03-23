@@ -18,13 +18,16 @@ function TodoForm() {
 	const handleSubmit = async (e) => {
 		// Stoppar default behavior
 		e.preventDefault();
+
 		// Kolla ifall input är tomt
 		if (!todo.trim()) return;
 
+		// Skickar todo till DB.
 		await postTodos(todo);
 
 		updateList();
 
+		// Töm input
 		setTodo("");
 	};
 
@@ -35,18 +38,18 @@ function TodoForm() {
 				<TodoInput
 					type="text"
 					value={todo}
-					setTodo={setTodo}
 					placeholder="Add todo"
 					onChange={(e) => setTodo(e.target.value)}
 					className="todoInput"
 				/>
+
+				{/* Submit btn */}
 				<Btn
 					btnClassName="btn"
 					spanText="Submit"
 					spanClassName="btnText"
 					svg={<PostSVG />}
 					type="submit"
-					id="submitBtn"
 				/>
 			</form>
 		</div>

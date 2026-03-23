@@ -7,6 +7,7 @@ function Btn(props) {
 				type={props.type}
 				id={props.id}>
 				{props.svg}
+
 				<span className={props.spanClassName}>{props.spanText}</span>
 			</button>
 		</div>
