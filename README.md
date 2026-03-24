@@ -38,7 +38,7 @@ Made by:
 1. Clone the project `git clone https://github.com/ASW-programming/Group2-TodoApp`
 2. Go to Firebase website and create a project.
 3. Create `serviceAccountKey.js` file in root directory
-4. Create the follwing variable and insert the `serviceAccountKey` from Firebase
+4. Create the following variable and insert the `serviceAccountKey` from Firebase
 
 ```js
 export const serviceAccount = {};
