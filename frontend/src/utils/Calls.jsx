@@ -31,7 +31,6 @@ export const postTodos = async (title) => {
 		}
 
 		const data = await postTodo.json();
-		console.log("Created todo:", data);
 
 		return data;
 	} catch (error) {
@@ -50,8 +49,6 @@ export const deleteTodo = async (id) => {
 		if (!response.ok) {
 			throw new Error("Could not delete");
 		}
-
-		console.log(`Deleted todo ${id}`);
 	} catch (error) {
 		throw new Error(`Could not delete todos: ${error.message}`);
 	}
