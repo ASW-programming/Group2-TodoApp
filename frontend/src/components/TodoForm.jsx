@@ -25,7 +25,7 @@ function TodoForm() {
 		// Skickar todo till DB.
 		await postTodos(todo);
 
-		updateList();
+		await updateList();
 
 		// Töm input
 		setTodo("");

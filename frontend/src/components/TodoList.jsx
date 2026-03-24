@@ -48,14 +48,14 @@ function TodoList() {
 		setEditingId(null);
 
 		// queryClient
-		updateList();
+		await updateList();
 	};
 
 	const handleCheckboxes = async (todo) => {
 		await updateTodo(todo.id, { completed: !todo.completed });
 
 		// queryClient
-		updateList();
+		await updateList();
 	};
 
 	// Funktion för att ta bort ifrån databasen
