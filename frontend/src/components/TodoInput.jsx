@@ -5,10 +5,11 @@ function TodoInput(props) {
 				type={props.type}
 				id="inputField"
 				className={props.className}
-				value={props.value}
 				onChange={props.onChange}
 				placeholder={props.placeholder}
-				checked={props.checked}
+				{...(props.type === "checkbox"
+					? { checked: props.checked }
+					: { value: props.value })}
 			/>
 		</div>
 	);

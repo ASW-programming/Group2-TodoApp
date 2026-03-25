@@ -40,10 +40,9 @@ function TodoList() {
 	};
 
 	const handleSaveEdit = async () => {
-		console.log("id:", editingId, "text:", editedText);
-		await updateTodo(editingId, { title: editedText });
-
 		if (!editedText.trim()) return;
+
+		await updateTodo(editingId, { title: editedText });
 
 		setEditingId(null);
 
